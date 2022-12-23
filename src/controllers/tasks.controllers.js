@@ -5,7 +5,6 @@ const getAllTasks = async (req, res, next) => {
   try {
     const allTasks = await pool.query("SELECT * FROM task");
 
-    throw new Error ("Mi propio error generado")
     res.json(allTasks.rows);
   } catch (error) {
     next(error);
