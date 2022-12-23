@@ -1,15 +1,20 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import TaskList from './components/TaskList'
-import TaskForm from "./components/TaskForm"
+import TaskList from "./components/TaskList";
+import TaskForm from "./components/TaskForm";
+import { Container } from "@mui/material";
+import NavBar from "./components/NavBar"
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<TaskList />}/>
-        <Route path="/tasks/new" element={<TaskForm />}/>
-        {/* {falta la edit route} */}
-      </Routes>
+    <NavBar />
+      <Container>
+        <Routes>
+          <Route path="/" element={<TaskList />} />
+          <Route path="/tasks/new" element={<TaskForm />} />
+          {/* {falta la edit route} */}
+        </Routes>
+      </Container>
     </BrowserRouter>
   );
 }
