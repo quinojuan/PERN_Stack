@@ -16,11 +16,11 @@ const getTask = async (req, res) => {
     const result = await pool.query("SELECT * FROM task WHERE id = $1", [id]);
 
     if (!result.rows.length)
-      return res.status(404).json({error: "Task not found!"});
+      return res.status(404).json({ error: "Task not found!" });
 
     return res.json(result.rows);
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
 };
 
@@ -40,8 +40,17 @@ const createTask = async (req, res) => {
   }
 };
 
-const deleteTask = (req, res) => {
-  res.send("Deleting a task");
+const deleteTask = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await pool.query("DELETE FROM task WHERE id = $1", [id]);
+
+  if (!result.rowCount)
+    return res.status(404).json({
+      message: "Task not found",
+    });
+
+    return res.sendStatus(204); // alguna vez llego a esta linea?
 };
 
 const updateTask = (req, res) => {
