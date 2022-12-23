@@ -1,5 +1,6 @@
 const pool = require("../db");
 
+// #region
 const getAllTasks = async (req, res) => {
   try {
     const allTasks = await pool.query("SELECT * FROM task");
@@ -50,12 +51,27 @@ const deleteTask = async (req, res) => {
       message: "Task not found",
     });
 
-    return res.sendStatus(204); // alguna vez llego a esta linea?
+  return res.sendStatus(204); // alguna vez llego a esta linea?
+};
+//#endregion
+
+const updateTask = async (req, res) => {
+  const { id } = req.params;
+  const { title, description } = req.body;
+
+  const result = await pool.query(
+    "UPDATE task SET title = $1, description = $2 WHERE id = $3",
+    [title, description, id]
+  );
+
+  if (!result.rows.length)
+    return res.status(404).json({
+      message: "Task not found",
+    });
+
+  res.json(result.rows[0]);
 };
 
-const updateTask = (req, res) => {
-  res.send("Updating a task");
-};
 module.exports = {
   getAllTasks,
   getTask,
