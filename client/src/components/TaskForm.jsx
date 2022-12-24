@@ -9,20 +9,19 @@ import {
 import { useState, useEffect } from "react";
 
 export default function TaskForm() {
-
-const [task, setTask] = useState({
+  const [task, setTask] = useState({
     title: "",
-    description: ""
-})
+    description: "",
+  });
 
-    const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit");
+    console.log(task); // veo la tarea que finalmente voy a enviar al backend
   };
 
-  const handleChange = e=> {
-    console.log(e.target.name, e.target.value)
-  }
+  const handleChange = (e) => {
+    setTask({ ...task, [e.target.name]: e.target.value });
+  };
 
   return (
     <Grid
@@ -48,14 +47,11 @@ const [task, setTask] = useState({
                   display: "block",
                   margin: ".5rem 0",
                 }}
-
                 name="title"
                 onChange={handleChange}
-                
-                
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                />
+              />
 
               <TextField
                 variant="filled"
@@ -63,17 +59,14 @@ const [task, setTask] = useState({
                 multiline
                 rows={4}
                 sx={{
-                    display: "block",
-                    margin: ".5rem 0",
+                  display: "block",
+                  margin: ".5rem 0",
                 }}
-                
                 name="description"
                 onChange={handleChange}
-                               
-                
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                />
+              />
 
               <Button variant="contained" type="submit">
                 Save
