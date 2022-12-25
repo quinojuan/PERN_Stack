@@ -6,8 +6,22 @@ export default function TaskList() {
   const [tasks, setTasks] = useState([]);
 
   const loadTasks = async () => {
-    const response = await axios("http://localhost:3001/tasks");
-    setTasks(response.data);
+    try {
+      const response = await axios("http://localhost:3001/tasks");
+      setTasks(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:3001/tasks/${id}`);
+
+      setTasks(tasks.filter((task) => task.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -31,7 +45,7 @@ export default function TaskList() {
               justifyContent: "space-between",
             }}
           >
-            <div style={{color: "white"}}>
+            <div style={{ color: "white" }}>
               <Typography>{task.title}</Typography>
               <Typography>{task.description}</Typography>
             </div>
@@ -48,7 +62,7 @@ export default function TaskList() {
               <Button
                 variant="contained"
                 color="warning"
-                onClick={() => console.log("delete")}
+                onClick={() => handleDelete(task.id)}
               >
                 Delete
               </Button>
